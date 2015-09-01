@@ -21,7 +21,8 @@ function listPath(apiPage) {
 
 // Name JSON file recent.json
 function recentPath(apiPage) {
-  return path.resolve(baseUrl, 'list', 'recent.json');
+  //return path.resolve(baseUrl, 'list', 'recent.json');
+  return baseUrl + '/list/recent.json';
 }
 
 function listUrl(apiPage) {
@@ -139,10 +140,11 @@ function generateRecent(locals) {
   hexo.route.set(recentPath(), JSON.stringify(result));
 }
 
-hexo.extend.generator.register('api', function(locals, render, callback) {
-  allPosts = locals.posts.toArray();
+hexo.extend.generator.register('api', function(locals) {
+  allPosts = locals.posts.sort('date').toArray();
   generateRecent(locals); // Create API file for most recent posts
-  generateList(locals);
-  generatePosts(locals)
-  callback();
+  //generateList(locals);
+  //generatePosts(locals)
+  //callback();
+  return [];
 });
